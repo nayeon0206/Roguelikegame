@@ -24,7 +24,11 @@ export async function startGame() {
 
       const rewardMessage = player.increaseRandomStat();
       console.log(chalk.green(`\n스테이지 클리어 보상: ${rewardMessage}`));
-      readlineSync.question(chalk.cyan(`\nPress Enter to move to the next stage...`));
+      while (true) { //엔터를 눌렀을때만 정상적으로 넘어가게끔 하는 함수
+        const input = readlineSync.question(chalk.cyan(`\nPress Enter to move to the next stage...`));
+        if (input.trim() === '') break; // 빈 입력일 때만 루프 종료
+        console.log(chalk.red(`Enter를 눌러주세요.`));
+      }
       stage++; // 다음 스테이지 진행
       console.clear();
 

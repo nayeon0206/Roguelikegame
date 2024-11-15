@@ -75,13 +75,11 @@ const battle = async (stage, player, monster) => {
         if (Math.random() < 0.5) {
           console.log(chalk.yellow(`\n${monster.name}에게서 무사히 도망쳤습니다!`));
           await restingStage(player, stage); //쉬는 함수 추가
-          return 'escaped';
+          return 'escaped'; //도망친 결과 반환
         } else {
           const monsterDamage = monster.attack();
           player.hp -= monsterDamage;
-          logs.push(
-            chalk.red(`도망 실패... ${monster.name}의 공격을 받았습니다: ${monsterDamage} 데미지`));
-          
+          logs.push(chalk.red(`도망 실패... ${monster.name}의 공격을 받았습니다: ${monsterDamage} 데미지`));
         }
         break;
     }

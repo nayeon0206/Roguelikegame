@@ -1,28 +1,10 @@
 import chalk from 'chalk';
 import figlet from 'figlet';
 import readlineSync from 'readline-sync';
-import {startGame} from "./game.js";
+import { startGame } from './game.js';
 
 function Initial() {
     console.log(chalk.yellow('게임을 준비 중...'));
-}
-
-// export const start = async () => {  // 여기서 start를 export
-//     while (true) {
-//         Initial();  
-//         displayLobby();
-//         await handleUserInput();  
-//     }
-// };
-
-export async function start() {
-
-    while (true) {
-
-        Initial();
-        displayLobby();
-        await handleUserInput();
-    }
 }
 
 // 로비 화면을 출력하는 함수
@@ -45,17 +27,17 @@ function displayLobby() {
     console.log(line);
 
     // 게임 이름
-    console.log(chalk.yellowBright.bold('게임에 오신것을 환영합니다!'));
+    console.log(chalk.yellowBright.bold('게임에 오신 것을 환영합니다!'));
 
     // 설명 텍스트
     console.log(chalk.green('옵션을 선택해주세요.'));
     console.log();
 
     // 옵션들
-    console.log(chalk.blue('1.') + chalk.white(' 새로운 게임 시작'));
-    console.log(chalk.blue('2.') + chalk.white(' 업적 확인하기'));
-    console.log(chalk.blue('3.') + chalk.white(' 옵션'));
-    console.log(chalk.blue('4.') + chalk.white(' 종료'));
+    console.log(chalk.blueBright('1.') + chalk.white(' 새로운 게임 시작'));
+    console.log(chalk.blueBright('2.') + chalk.white(' 업적 확인하기'));
+    console.log(chalk.blueBright('3.') + chalk.white(' 도움말'));
+    console.log(chalk.blueBright('4.') + chalk.white(' 종료'));
 
     // 하단 경계선
     console.log(line);
@@ -65,36 +47,50 @@ function displayLobby() {
 }
 
 // 유저 입력을 받아 처리하는 함수
-function handleUserInput() {
-    const choice = readlineSync.question('start : ');
+async function handleUserInput() {
+    let isRunning = true;
 
-    switch (choice) {
-        case '1':
-            console.log(chalk.green('게임을 시작합니다.'));
-            // 여기에서 새로운 게임 시작 로직을 구현
-            startGame();
-            break;
-        case '2':
-            console.log(chalk.yellow('구현 준비중입니다.. 게임을 시작하세요'));
-            // 업적 확인하기 로직을 구현
-            handleUserInput();
-            break;
-        case '3':
-            console.log(chalk.blue('구현 준비중입니다.. 게임을 시작하세요'));
-            // 옵션 메뉴 로직을 구현
-            handleUserInput();
-            break;
-        case '4':
-            console.log(chalk.red('게임을 종료합니다.'));
-            // 게임 종료 로직을 구현
-            process.exit(0); // 게임 종료
-            break;
-        default:
-            console.log(chalk.red('유효하지 않은 입력값입니다.'));
-            handleUserInput(); // 유효하지 않은 입력일 경우 다시 입력 받음
+    while (isRunning) {
+        const choice = readlineSync.question('Enter a number between 1 - 4 to start the game. : ');
+
+        switch (choice) {
+            case '1':
+                console.log(chalk.green('게임을 시작합니다.'));
+                await startGame();  // 새로운 게임 시작 (비동기 처리)
+                break;
+            case '2':
+                console.log(chalk.yellow('구현 준비중입니다.. 게임을 시작하세요.'));
+                break;
+            case '3':
+                console.log(chalk.green('게임의 주요 시스템 정보!'));
+                console.log(chalk.cyan('1. 새로운 게임을 시작하여 도전을 시작하세요.'));
+                console.log(chalk.cyan('2. 전투 중에는 공격하거나 방어하는 선택을 할 수 있습니다. 도망을 칠 수도 있습니다!'));
+                console.log(chalk.cyan('3. 전투에서 도망치면 체력을 회복할 수 있습니다 !'));
+                console.log(chalk.gray('\nEnter를 눌러 메뉴로 돌아가세요.'));
+                readlineSync.question();
+                break;
+            case '4':
+                console.log(chalk.red('게임을 종료합니다.'));
+                isRunning = false; // 루프 종료
+                break;
+            default:
+                console.log(chalk.red('유효하지 않은 입력값입니다. 다시 입력해주세요.'));
+                break;
+        }
+    }
+
+    console.log(chalk.cyanBright('게임을 종료합니다. 이용해주셔서 감사합니다.'));
+    process.exit(0);
+}
+
+// 게임 시작 함수
+export async function start() {
+    Initial();
+    while (true) {
+        displayLobby();
+        await handleUserInput();
     }
 }
 
-
 // 게임 실행
-start(); //서버 시작
+start(); // 서버 시작
