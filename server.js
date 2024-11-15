@@ -65,7 +65,7 @@ async function handleUserInput() {
                 console.log(chalk.green('게임의 주요 시스템 정보!'));
                 console.log(chalk.cyan('1. 새로운 게임을 시작하여 도전을 시작하세요.'));
                 console.log(chalk.cyan('2. 전투 중에는 공격하거나 방어하는 선택을 할 수 있습니다. 도망을 칠 수도 있습니다!'));
-                console.log(chalk.cyan('3. 전투에서 도망치면 체력을 회복할 수 있습니다 !'));
+                console.log(chalk.cyan('3. 전투에서 도망치면 어딘가로 이동해 체력을 회복할 수 있습니다 ! !'));
                 console.log(chalk.gray('\nEnter를 눌러 메뉴로 돌아가세요.'));
                 readlineSync.question();
                 break;
