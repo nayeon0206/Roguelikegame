@@ -7,17 +7,16 @@ class Player {
   constructor() {
     // 플레이어의 체력, 최고공격력, 최소공격력, 공격 방어
     this.hp = 100;
+    this.maxHp = 100;
     this.minAtt = 10;
     this.maxAtt = 25;
     this.defendChance = 0.3;
   }
 
   // 도망치면 힐되는 로직 추가 0.2퍼센트
-  heal(percentage) {
-    const healAmount = Math.floor(this.hp * percentage); // 
-    this.hp += healAmount;
-    console.log(chalk.green(`휴식 후 체력이 ${healAmount}만큼 회복되었습니다! 현재 체력: ${this.hp}`));
-  }
+    heal(percentage) {
+      this.hp = Math.min(this.hp + this.maxHp * percentage, this.maxHp); // 최대 체력 한도 내에서 회복
+    }
 
   attack() {
     // 플레이어의 공격

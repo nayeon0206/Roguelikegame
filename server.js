@@ -3,6 +3,28 @@ import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import {startGame} from "./game.js";
 
+function Initial() {
+    console.log(chalk.yellow('게임을 준비 중...'));
+}
+
+// export const start = async () => {  // 여기서 start를 export
+//     while (true) {
+//         Initial();  
+//         displayLobby();
+//         await handleUserInput();  
+//     }
+// };
+
+export async function start() {
+
+    while (true) {
+
+        Initial();
+        displayLobby();
+        await handleUserInput();
+    }
+}
+
 // 로비 화면을 출력하는 함수
 function displayLobby() {
     console.clear();
@@ -73,11 +95,6 @@ function handleUserInput() {
     }
 }
 
-// 게임 시작 함수
-function start() {
-    displayLobby();
-    handleUserInput();
-}
 
 // 게임 실행
-start();
+start(); //서버 시작
