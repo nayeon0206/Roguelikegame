@@ -1,8 +1,18 @@
 import Player from './Player.js';
 import Monster from './Monster.js';
-import battle from './Battle.js';
+import battle from './battle.js';
 import chalk from 'chalk';
 import restingStage from './restingStage.js';
+
+export async function start() {
+
+  while (true) {
+
+      Initial();
+      displayLobby();
+      await handleUserInput();
+  }
+}
 
 export async function startGame() {
   console.clear();

@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import displayStatus from './displayStatus.js';
-import restingStage from './stages/restingStage.js';
+import restingStage from './restingStage.js';
 
 // -----------------------------배틀
 const battle = async (stage, player, monster) => {

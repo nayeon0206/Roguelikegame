@@ -1,7 +1,7 @@
 //--------------------------플레이어
 
 import chalk from 'chalk';
-import RestingStage from './restingStage';
+import restingStage from './restingStage.js';
 
 class Player {
   constructor() {
@@ -11,9 +11,10 @@ class Player {
     this.maxAtt = 25;
     this.defendChance = 0.3;
   }
-  // 도망치면 힐되는 로직 추가
+
+  // 도망치면 힐되는 로직 추가 0.2퍼센트
   heal(percentage) {
-    const healAmount = Math.floor(this.hp * 0.2); // 
+    const healAmount = Math.floor(this.hp * percentage); // 
     this.hp += healAmount;
     console.log(chalk.green(`휴식 후 체력이 ${healAmount}만큼 회복되었습니다! 현재 체력: ${this.hp}`));
   }
