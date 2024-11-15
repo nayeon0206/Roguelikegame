@@ -57,6 +57,8 @@ export async function startGame() {
     const restartChoice = readlineSync.question('New game start? (y / n): ');
     if (restartChoice.toLowerCase() === 'y') {
       startGame();
+    }else {
+      return;
     }
   }
 }
