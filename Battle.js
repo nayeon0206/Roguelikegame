@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import displayStatus from './displayStatus.js';
-// import Monster from './Monster.js';
+import Monster from './Monster.js';
 
-//-----------------------------배틀
+// -----------------------------배틀
 const battle = async (stage, player, monster) => {
   let logs = [];
 

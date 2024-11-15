@@ -4,10 +4,6 @@ import battle from './Battle.js';
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 
-// function start() {
-//   displayLobby();       // 로비 화면 출력
-//   handleUserInput();    // 사용자 입력 처리
-// }
 
 export async function startGame() {
   console.clear();
@@ -58,7 +54,7 @@ export async function startGame() {
     if (restartChoice.toLowerCase() === 'y') {
       startGame();
     }else {
-      return;
+      start()
     }
   }
 }
