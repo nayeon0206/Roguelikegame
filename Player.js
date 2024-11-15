@@ -1,6 +1,7 @@
 //--------------------------플레이어
 
 import chalk from 'chalk';
+import RestingStage from './restingStage';
 
 class Player {
   constructor() {
@@ -9,6 +10,12 @@ class Player {
     this.minAtt = 10;
     this.maxAtt = 25;
     this.defendChance = 0.3;
+  }
+  // 도망치면 힐되는 로직 추가
+  heal(percentage) {
+    const healAmount = Math.floor(this.hp * 0.2); // 
+    this.hp += healAmount;
+    console.log(chalk.green(`휴식 후 체력이 ${healAmount}만큼 회복되었습니다! 현재 체력: ${this.hp}`));
   }
 
   attack() {
@@ -19,32 +26,31 @@ class Player {
   }
 
   increaseRandomStat() {
-    const statOptions  = ["hp", "minAtt", "maxAtt", "defendChance"];
+    const statOptions = ['hp', 'minAtt', 'maxAtt', 'defendChance'];
     const chosenStat = statOptions[Math.floor(Math.random() * statOptions.length)];
-    let rewardMessage = "";
+    let rewardMessage = '';
 
     switch (chosenStat) {
-      case "hp":
+      case 'hp':
         this.hp += 25;
-        rewardMessage = "체력이 25 증가했습니다!";
+        rewardMessage = '체력이 25 증가했습니다!';
         break;
-      case "minAtt":
+      case 'minAtt':
         this.minAtt += 5;
-        rewardMessage = "최소 공격력이 5 증가했습니다!";
+        rewardMessage = '최소 공격력이 5 증가했습니다!';
         break;
-      case "maxAtt":
+      case 'maxAtt':
         this.maxAtt += 7;
-        rewardMessage = "최대 공격력이 7 증가했습니다!";
+        rewardMessage = '최대 공격력이 7 증가했습니다!';
         break;
-      case "defendChance":
+      case 'defendChance':
         this.defendChance += 0.05;
         // 방어 확률이 1을 초과하지 않게 하는 함수
         if (this.defendChance > 1) this.defendChance = 1;
-        rewardMessage = "방어 확률이 5% 증가했습니다!";
+        rewardMessage = '방어 확률이 5% 증가했습니다!';
         break;
     }
     return rewardMessage;
   }
 }
-
 export default Player;

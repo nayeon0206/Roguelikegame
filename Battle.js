@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import displayStatus from './displayStatus.js';
-import Monster from './Monster.js';
+import restingStage from './stages/restingStage.js';
 
 // -----------------------------배틀
 const battle = async (stage, player, monster) => {
@@ -88,7 +88,8 @@ const battle = async (stage, player, monster) => {
       case '4': // 도망치기 돔황챠! (50% 확률)
         if (Math.random() < 0.5) {
           console.log(chalk.yellow(`\n${monster.name}에게서 무사히 도망쳤습니다!`));
-          return 'escaped'; // 배틀에서 탈출
+          await restingStage(player, stage); //쉬는 함수 추가
+          return 'escaped'; // 배틀에서 탈출해서 쉬는 함수 만들기
         } else {
           const monsterDamage = monster.attack();
           player.hp -= monsterDamage;
@@ -99,7 +100,7 @@ const battle = async (stage, player, monster) => {
         break;
     }
     
-    logs.forEach(log => console.log(log)); // 모든 로그를 출력
+    // logs.forEach(log => console.log(log)); // 모든 로그를 출력은 없어도됨
   }
   // 배틀 결과 확인..이겼는지 졌는지
   return player.hp > 0 ? 'won' : 'lost';

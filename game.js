@@ -2,8 +2,7 @@ import Player from './Player.js';
 import Monster from './Monster.js';
 import battle from './Battle.js';
 import chalk from 'chalk';
-import readlineSync from 'readline-sync';
-
+import restingStage from './restingStage.js';
 
 export async function startGame() {
   console.clear();
