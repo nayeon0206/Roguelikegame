@@ -81,7 +81,6 @@ class Player {
         break;
     }
 
-    console.log(chalk.yellowBright(rewardMessage));
     return rewardMessage;
   }
 }

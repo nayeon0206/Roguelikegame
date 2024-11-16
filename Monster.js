@@ -15,11 +15,11 @@ class Monster {
       this.maxAtt = 8 + stage * 2;
 
       const monsterNames =
-        stage < 5
-          ? ['박쥐', '두꺼비', '슬라임', '거미']
-          : stage < 7
-            ? ['좀비', '늑대', '해골 병사', '도깨비']
-            : ['드래곤', '골렘', '불사조', '크라켄', '리치'];
+        stage < 6
+          ? ['박쥐', '전갈', '슬라임', '뱀']
+          : stage < 9
+            ? ['좀비', '유령 기사', '스켈레톤', '도깨비']
+            : ['골렘', '불사조', '미이라', '늑대'];
       this.name = monsterNames[Math.floor(Math.random() * monsterNames.length)];
     }
   }

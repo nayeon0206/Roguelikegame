@@ -34,7 +34,7 @@ const battle = async (stage, player, monster) => {
     logs.slice(-5).forEach((log) => console.log(log)); // 마지막 5개의 로그만 표시
 
     console.log(
-      chalk.greenBright(
+      chalk.green(
         `\n1. 공격하기 2. 연속 공격 (25%) 3. 방어하기 (${(player.defendChance * 100).toFixed(0)}%) 4. 도망치기! 돔황챠! (50%) `,
       ),
     );
@@ -71,11 +71,8 @@ const battle = async (stage, player, monster) => {
         if (Math.random() < 0.25) {
           const firstAttack = player.attack();
           monster.hp -= firstAttack;
-          logs.push(
-            chalk.blueBright(
-              `\n연속 공격 성공! 첫 번째 공격으로 ${firstAttack} 데미지를 입혔습니다.`,
-            ),
-          );
+          logs.push( chalk.blueBright(`\n연속 공격 성공!`));
+          logs.push( chalk.blueBright(`\n첫 번째 공격으로 ${firstAttack} 데미지를 입혔습니다.`));
 
           const secondAttack = player.attack();
           monster.hp -= secondAttack;
