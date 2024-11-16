@@ -16,7 +16,7 @@ function displayLobby() {
     // 타이틀 텍스트
     console.log(
         chalk.cyan(
-            figlet.textSync('RL- Javascript', {
+            figlet.textSync('Text-Rogue', {
                 font: 'Standard',
                 horizontalLayout: 'default',
                 verticalLayout: 'default'
@@ -25,14 +25,14 @@ function displayLobby() {
     );
 
     // 상단 경계선
-    const line = chalk.magentaBright('='.repeat(50));
+    const line = chalk.magentaBright('='.repeat(52));
     console.log(line);
 
     // 게임 이름
     console.log(chalk.yellowBright.bold('게임에 오신 것을 환영합니다!'));
 
     // 설명 텍스트
-    console.log(chalk.green('옵션을 선택해주세요.'));
+    console.log(chalk.green('\n옵션을 선택해주세요.'));
     console.log();
 
     // 옵션들
@@ -45,7 +45,7 @@ function displayLobby() {
     console.log(line);
 
     // 하단 설명
-    console.log(chalk.gray('1-4 사이의 수를 입력한 뒤 엔터를 누르세요.'));
+    console.log(chalk.gray('\n1-4 사이의 수를 입력한 뒤 엔터를 누르세요!'));
 }
 
 // 유저 입력을 받아 처리하는 함수
@@ -54,7 +54,7 @@ async function handleUserInput() {
 
     while (isRunning) {
         displayLobby();
-        const choice = readlineSync.question('Enter a number between 1 - 4 to start the game. : ');
+        const choice = readlineSync.question('Enter a number between 1 - 4 : ');
 
         switch (choice) {
             case '1':

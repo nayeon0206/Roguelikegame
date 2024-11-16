@@ -21,7 +21,7 @@ function displayStatus(stage, player, monster) {
     console.log(chalk.redBright(`| 몬스터 체력: ${monster.hp}`));
     console.log(chalk.redBright(`| 몬스터 공격력: ${monster.minAtt} ~ ${monster.maxAtt}`));
   
-    console.log(chalk.magentaBright(`=============================\n`));
+    console.log(chalk.magentaBright(`==============================\n`));
   }
   
 
