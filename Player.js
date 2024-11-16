@@ -3,11 +3,11 @@ import chalk from 'chalk';
 class Player {
   constructor(initialStats = {}) {
     const defaultStats = {
-      hp: 120,
+      hp: 150,
       maxHp: 150,
       minAtt: 15,
-      maxAtt: 25,
-      defendChance: 0.3,
+      maxAtt: 30,
+      defendChance: 0.4,
     };
 
     const stats = { ...defaultStats, ...initialStats }; // 기본값과 사용자 제공값 병합
@@ -52,8 +52,8 @@ class Player {
         rewardMessage = `최소 공격력이 5 증가했습니다! 현재 최소 공격력: ${this.minAtt}`;
         break;
       case 'maxAtt':
-        this.maxAtt += 7;
-        rewardMessage = `최대 공격력이 7 증가했습니다! 현재 최대 공격력: ${this.maxAtt}`;
+        this.maxAtt += 10;
+        rewardMessage = `최대 공격력이 10 증가했습니다! 현재 최대 공격력: ${this.maxAtt}`;
         break;
       case 'defendChance': {
         const prevDefendChance = Math.round(this.defendChance * 100);

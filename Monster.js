@@ -6,13 +6,13 @@ class Monster {
       // 보스 몬스터
       this.name = '드래곤';
       this.hp = 300;
-      this.minAtt = 20;
-      this.maxAtt = 40;
+      this.minAtt = 25;
+      this.maxAtt = 45;
     } else {
       // 일반 몬스터
-      this.hp = 20 + stage * 10;
-      this.minAtt = 3 + stage * 2;
-      this.maxAtt = 8 + stage * 2;
+      this.hp = 10 + stage * 10;
+      this.minAtt = 1 + stage * 2;
+      this.maxAtt = 6 + stage * 2;
 
       const monsterNames =
         stage < 6

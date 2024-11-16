@@ -117,7 +117,7 @@ const battle = async (stage, player, monster) => {
         }
         break;
 
-      case '3': // 방어하기 (30% 확률)
+      case '3': // 방어하기 (40%확률)
         if (Math.random() < player.defendChance) {
           logs.push(chalk.yellow(`\n방어 성공! ${monster.name}의 공격을 막아냈습니다!`));
         } else {
