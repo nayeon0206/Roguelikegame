@@ -24,6 +24,9 @@ class Player {
     const newHp = Math.min(this.hp + healAmount, this.maxHp); // 최대 체력 한도 내에서 회복
     const actualHeal = newHp - this.hp; // 실제 회복된 양
     this.hp = newHp;
+
+    //console.log(chalk.yellow(`heal() 디버깅: healAmount=${healAmount}, actualHeal=${actualHeal}, newHp=${newHp}`)); // 디버깅용 출력
+
     return actualHeal; // 회복량 반환
   }
 

@@ -11,8 +11,8 @@ class Monster {
     } else {
       // 일반 몬스터
       this.hp = 10 + stage * 10;
-      this.minAtt = 1 + stage * 2;
-      this.maxAtt = 6 + stage * 2;
+      this.minAtt = 2 + stage * 2;
+      this.maxAtt = 7 + stage * 2;
 
       const monsterNames =
         stage < 6

@@ -2,8 +2,8 @@ import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import displayStatus from './displayStatus.js';
 import restingStage from './restingStage.js';
-import Monster from './Monster.js';
 import { unlockMonster } from './monsterCompendium.js';
+import { start } from './server.js'; // 로비로 돌아가기 함수 호출
 
 // 사망 처리 로직 함수
 const handlePlayerDeath = (stage, logs, player, monster, monsterDamage) => {
@@ -26,7 +26,6 @@ const battle = async (stage, player, monster) => {
   let logs = []; // 전투 로그 초기화
 
   logs.push(chalk.redBright(`\n${monster.name}(이)가 나타났다!`));
-  unlockMonster(monster.name); // 몬스터 도감 등록
 
   while (player.hp > 0 && monster.hp > 0) {
     console.clear();
@@ -37,12 +36,11 @@ const battle = async (stage, player, monster) => {
 
     console.log(
       chalk.green(
-        `\n1. 공격하기 2. 연속 공격 (25%) 3. 방어하기 (${(player.defendChance * 100).toFixed(0)}%) 4. 도망치기 (50%)`,
-      ),
+        `\n1. 공격하기 2. 연속 공격 (25%) 3. 방어하기 (${(player.defendChance * 100).toFixed(0)}%) 4. 휴식하기 (50%) 5. 시작 화면으로 도망가기`),
     );
     const choice = readlineSync.question('Your choice? ').trim();
 
-    if (!['1', '2', '3', '4'].includes(choice)) {
+    if (!['1', '2', '3', '4', '5'].includes(choice)) {
       logs.push(chalk.red('유효하지 않은 선택입니다! 다시 선택해주세요.'));
       continue; // 유효하지 않은 입력 시 루프 계속
     }
@@ -56,7 +54,9 @@ const battle = async (stage, player, monster) => {
         logs.push(chalk.blueBright(`${monster.name}에게 ${playerDamage} 만큼 피해를 입혔습니다!`));
 
         if (monster.hp <= 0) {
-          logs.push(chalk.greenBright(`\n${monster.name}(을)를 처치했습니다!`));
+          unlockMonster(monster.name); // 몬스터 처치 시 도감 등록
+          logs.push(chalk.redBright(`\n${monster.name}(을)를 처치했습니다!`));
+          logs.push(chalk.white(`${monster.name}(이)가 도감에 등록되었습니다!`));
           console.clear();
           displayStatus(stage, player, monster); // 전투 종료 후 상태 출력
           logs.slice(-5).forEach((log) => console.log(log)); // 최근 5개의 로그만 출력
@@ -85,7 +85,8 @@ const battle = async (stage, player, monster) => {
           );
 
           if (monster.hp <= 0) {
-            logs.push(chalk.greenBright(`\n${monster.name}(을)를 처치했습니다!`));
+            unlockMonster(monster.name); // 몬스터 처치 시 도감 등록
+            logs.push(chalk.redBright(`\n${monster.name}(을)를 처치했습니다!`));
             console.clear();
             displayStatus(stage, player, monster);
             logs.slice(-5).forEach((log) => console.log(log));
@@ -97,7 +98,9 @@ const battle = async (stage, player, monster) => {
           logs.push(chalk.blueBright(`두 번째 공격으로 ${secondAttack} 데미지를 입혔습니다.`));
 
           if (monster.hp <= 0) {
-            logs.push(chalk.greenBright(`\n${monster.name}(을)를 처치했습니다!`));
+            unlockMonster(monster.name); // 몬스터 처치 시 도감 등록
+            logs.push(chalk.redBright(`\n${monster.name}(을)를 처치했습니다!`));
+            logs.push(chalk.white(`${monster.name}(이)가 도감에 등록되었습니다!`));
             console.clear();
             displayStatus(stage, player, monster);
             logs.slice(-5).forEach((log) => console.log(log));
@@ -137,30 +140,38 @@ const battle = async (stage, player, monster) => {
         }
         break;
 
-      case '4': // 도망치기 (50% 확률)
-        if (Math.random() < 0.5) {
+        case '4': // 휴식하기 (50% 확률)
+        const escapeSuccess = Math.random() < 0.5;
+      
+        if (escapeSuccess) {
           console.log(chalk.yellow(`\n${monster.name}에게서 무사히 도망쳤습니다!`));
+          
+          // 쉬는 스테이지 호출
           const restResult = await restingStage(player, stage);
-
+          console.log(chalk.green(`[DEBUG] restingStage 반환값: ${restResult}`));
+      
           if (restResult === 'continue') {
-            continue;
-          } else if (restResult === 'quit') {
-            return 'escaped';
+            console.log(chalk.blueBright('전투를 계속합니다.'));
+            continue; // 도망 성공 후 스테이지 복귀
           }
         } else {
           const monsterDamage4 = monster.attack();
           player.hp -= monsterDamage4;
           logs.push(
             chalk.redBright(
-              `도망 실패... ${monster.name}의 공격을 받았습니다: ${monsterDamage4} 데미지`,
+              `잠시 쉬러가기 실패... ${monster.name}의 공격을 받았습니다: ${monsterDamage4} 데미지`,
             ),
           );
-
+      
           if (player.hp <= 0) {
             return handlePlayerDeath(stage, logs, player, monster, monsterDamage4);
           }
         }
         break;
+
+        case '5': // 로비로 돌아가기
+        console.log(chalk.cyanBright('시작 화면으로 돌아갑니다...'));
+        return start(); // 로비로 돌아가기 함수 호출      
     }
   }
 
