@@ -62,15 +62,15 @@ async function handleUserInput() {
                 console.log(chalk.yellow('구현 준비중입니다.. 게임을 시작하세요.'));
                 break;
             case '3':
-                console.log(chalk.green('게임의 주요 시스템 정보!'));
+                console.log(chalk.yellowBright('\n게임의 주요 시스템 정보!'));
                 console.log(chalk.cyan('1. 새로운 게임을 시작하여 도전을 시작하세요.'));
                 console.log(chalk.cyan('2. 전투 중에는 공격하거나 방어하는 선택을 할 수 있습니다. 도망을 칠 수도 있습니다!'));
-                console.log(chalk.cyan('3. 전투에서 도망치면 어딘가로 이동해 체력을 회복할 수 있습니다 ! !'));
+                console.log(chalk.cyan('3. 전투에서 도망치면 어딘가로 이동해 체력을 회복할 수 있습니다 !!'));
                 console.log(chalk.gray('\nEnter를 눌러 메뉴로 돌아가세요.'));
                 readlineSync.question();
                 break;
             case '4':
-                console.log(chalk.red('게임을 종료합니다.'));
+                console.log(chalk.cyanBright('게임을 종료합니다.'));
                 isRunning = false; // 루프 종료
                 break;
             default:
@@ -79,7 +79,6 @@ async function handleUserInput() {
         }
     }
 
-    console.log(chalk.cyanBright('게임을 종료합니다. 이용해주셔서 감사합니다.'));
     process.exit(0);
 }
 

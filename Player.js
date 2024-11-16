@@ -17,18 +17,16 @@ class Player {
   heal(percentage) {
     const healAmount = this.maxHp * percentage;
     this.hp = Math.min(this.hp + healAmount, this.maxHp); // 최대 체력 한도 내에서 회복
-    console.log(
-      chalk.green(
-        `체력이 ${Math.round(healAmount)}만큼 회복되었습니다. 현재 체력: ${Math.round(this.hp)} / ${this.maxHp}`,
-      ),
-    );
+    // console.log(
+    //   chalk.green(
+    //     `체력이 ${Math.round(healAmount)}만큼 회복되었습니다. 현재 체력: ${Math.round(this.hp)} / ${this.maxHp}`,
+    //   ),
+    // );
   }
 
   attack() {
     // 플레이어의 공격
-    const damage = Math.floor(Math.random() * (this.maxAtt - this.minAtt + 1)) + this.minAtt;
-    // console.log(chalk.yellow(`플레이어가 ${damage} 데미지를 입혔습니다.`));
-    return damage;
+    return Math.floor(Math.random() * (this.maxAtt - this.minAtt + 1)) + this.minAtt;
   }
 
   increaseRandomStat() {
@@ -37,32 +35,38 @@ class Player {
     let rewardMessage = '';
 
     switch (chosenStat) {
-      case 'hp':
-        this.hp = Math.min(this.hp + 25, this.maxHp);
-        rewardMessage = '체력이 25 증가했습니다!';
+      case 'hp': {
+        const prevHp = this.hp; // 이전 체력 저장
+        this.heal(0.25); // 체력 25% 회복
+        rewardMessage = `체력이 ${this.hp - prevHp} 증가했습니다! 현재 체력: ${this.hp.toFixed(2)} / ${this.maxHp}`;
         break;
+      }
       case 'minAtt':
         this.minAtt += 5;
-        rewardMessage = '최소 공격력이 5 증가했습니다!';
+        rewardMessage = `최소 공격력이 5 증가했습니다! 현재 최소 공격력: ${this.minAtt}`;
         break;
       case 'maxAtt':
         this.maxAtt += 7;
-        rewardMessage = '최대 공격력이 7 증가했습니다!';
+        rewardMessage = `최대 공격력이 7 증가했습니다! 현재 최대 공격력: ${this.maxAtt}`;
         break;
-      case 'defendChance':
-        this.defendChance = Math.min(this.defendChance + 0.05, 1); // 방어 확률이 1을 초과하지 않게 설정
-        rewardMessage = '방어 확률이 5% 증가했습니다!';
-        break;
-      case 'maxHp':
+        case 'defendChance': {
+          const prevDefendChance = Math.round(this.defendChance * 100); // 이전 방어 확률(정수 형태)
+          this.defendChance = Math.min(this.defendChance + 0.05, 1); // 방어 확률 증가 (최대 100%)
+          const defendIncrease = Math.round(this.defendChance * 100) - prevDefendChance; // 증가량 계산
+          rewardMessage = `방어 확률이 ${defendIncrease}% 증가했습니다! 현재 방어 확률: ${Math.round(this.defendChance * 100)}%`;
+          break;
+        }
+      case 'maxHp': {
         if (this.maxHp < 200) {
-          const prevMaxHp = this.maxHp; // 이전 최대 체력
-          const increaseAmount = Math.min(20, 200 - this.maxHp); // 증가량 계산
-          this.maxHp += increaseAmount; // 최대 체력 증가
+          const prevMaxHp = this.maxHp;
+          const increaseAmount = Math.min(20, 200 - this.maxHp);
+          this.maxHp += increaseAmount;
           rewardMessage = `최대 체력이 ${increaseAmount} 증가했습니다! 이전: ${prevMaxHp}, 현재: ${this.maxHp}`;
         } else {
           rewardMessage = `최대 체력이 이미 최대치(200)입니다!`;
         }
         break;
+      }
       default:
         rewardMessage = '알 수 없는 능력치가 선택되었습니다.';
         break;

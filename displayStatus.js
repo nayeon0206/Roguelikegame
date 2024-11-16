@@ -2,7 +2,7 @@ import chalk from "chalk";
 
 // --------------------------displayStatus
 function displayStatus(stage, player, monster) {
-    console.log(chalk.magentaBright(`\n===== Current Status =====`));
+    console.log(chalk.magentaBright(`\n======= Current Status =======`));
 
     // 스테이지 정보
     console.log(chalk.cyanBright(`| Stage: ${stage}`));
@@ -18,7 +18,7 @@ function displayStatus(stage, player, monster) {
     console.log(chalk.redBright(`| 몬스터 체력: ${monster.hp}`));
     console.log(chalk.redBright(`| 몬스터 공격력: ${monster.minAtt} ~ ${monster.maxAtt}`));
 
-    console.log(chalk.magentaBright(`===========================\n`));
+    console.log(chalk.magentaBright(`=============================\n`));
 }
 
 export default displayStatus;
