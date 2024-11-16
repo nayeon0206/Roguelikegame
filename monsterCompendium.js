@@ -28,7 +28,7 @@ export function showMonsterCompendium() {
       console.log(
         isUnlocked
           ? chalk.cyanBright(
-              `${monster.name} (HP: ${monster.hp}, 공격력: ${monster.attack})`,
+              `${monster.name} (HP: ${monster.hp}, 최소 공격력: ${monster.minAttack}, 최대 공격력:${monster.maxAttack} )`,
             )
           : chalk.gray(`?? (HP: ??-??, 공격력: ??-??)`),
       );
