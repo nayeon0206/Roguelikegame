@@ -2,6 +2,8 @@ import chalk from 'chalk';
 import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import { startGame } from './game.js';
+import { showMonsterCompendium } from './monsterCompendium.js'; // 몬스터 도감 임포트
+import { showHelp } from './help.js'; // 도움말 임포트
 
 function Initial() {
     console.log(chalk.yellow('게임을 준비 중...'));
@@ -35,8 +37,8 @@ function displayLobby() {
 
     // 옵션들
     console.log(chalk.blueBright('1.') + chalk.white(' 새로운 게임 시작'));
-    console.log(chalk.blueBright('2.') + chalk.white(' 업적 확인하기'));
-    console.log(chalk.blueBright('3.') + chalk.white(' 도움말'));
+    console.log(chalk.blueBright('2.') + chalk.white(' 도움말'));
+    console.log(chalk.blueBright('3.') + chalk.white(' 몬스터 도감 보기'));
     console.log(chalk.blueBright('4.') + chalk.white(' 종료'));
 
     // 하단 경계선
@@ -51,26 +53,18 @@ async function handleUserInput() {
     let isRunning = true;
 
     while (isRunning) {
+        displayLobby();
         const choice = readlineSync.question('Enter a number between 1 - 4 to start the game. : ');
 
         switch (choice) {
             case '1':
-                console.log(chalk.green('게임을 시작합니다.'));
                 await startGame();  // 새로운 게임 시작 (비동기 처리)
                 break;
             case '2':
-                console.log(chalk.yellow('구현 준비중입니다.. 게임을 시작하세요.'));
+                showHelp(); //도움말 표시 함수 호출
                 break;
             case '3':
-                console.log(chalk.yellowBright('\n게임의 주요 시스템 정보!'));
-                console.log(chalk.gray('==============================================='));
-                console.log(chalk.cyan('\n1. 전투 중에는 공격하거나 방어하는 선택을 할 수 있습니다.'));
-                console.log(chalk.cyan('2. 전투에서 도망치면 어딘가로 이동해 체력을 회복할 수 있습니다.'));
-                console.log(chalk.cyan('3. 스테이지 1-9 까지는 평범한 몬스터가 등장합니다.'));
-                console.log(chalk.cyan('4. 스테이지 10 에서는 보스 몬스터가 등장합니다!'));
-                console.log(chalk.cyan('5. 새로운 게임을 시작하여 도전을 시작하세요!'));
-                console.log(chalk.gray('\nEnter를 눌러 메뉴로 돌아가세요.'));
-                readlineSync.question();
+                showMonsterCompendium(); // 몬스터 도감 표시 함수 호출
                 break;
             case '4':
                 console.log(chalk.cyanBright('게임을 종료합니다.'));

@@ -4,7 +4,7 @@ class Monster {
   constructor(stage) {
     if (stage === 10) {
       // 보스 몬스터
-      this.name = '보스 드래곤';
+      this.name = '드래곤';
       this.hp = 300;
       this.minAtt = 20;
       this.maxAtt = 40;
@@ -18,8 +18,8 @@ class Monster {
         stage < 6
           ? ['박쥐', '전갈', '슬라임', '뱀']
           : stage < 9
-            ? ['좀비', '유령 기사', '스켈레톤', '도깨비']
-            : ['골렘', '불사조', '미이라', '늑대'];
+            ? ['늑대', '도깨비', '스켈레톤', '좀비']
+            : ['골렘', '불사조', '미이라', '유령기사'];
       this.name = monsterNames[Math.floor(Math.random() * monsterNames.length)];
     }
   }

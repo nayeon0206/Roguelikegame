@@ -3,9 +3,9 @@ import readlineSync from 'readline-sync';
 import displayStatus from './displayStatus.js';
 import restingStage from './restingStage.js';
 import Monster from './Monster.js';
+import { unlockMonster } from './monsterCompendium.js';
 
 // 사망 처리 로직 함수
-
 const handlePlayerDeath = (logs, player, monster, monsterDamage) => {
   logs.push(
     chalk.redBright(
@@ -13,36 +13,38 @@ const handlePlayerDeath = (logs, player, monster, monsterDamage) => {
     ),
   );
   logs.push(chalk.redBright(`플레이어가 사망했습니다.... 게임이 종료됩니다.`));
+
   console.clear();
-  displayStatus(null, player, monster); // 상태 출력
-  logs.forEach((log) => console.log(log)); // 로그 출력
-  return 'lost'; // 전투 패배 결과 반환
+  displayStatus(stage, player, monster);
+  logs.slice(-5).forEach((log) => console.log(log));
+
+  return 'lost'; // 즉시 전투 종료
 };
 
-//전투 메인 함수
-
+// 전투 메인 함수
 const battle = async (stage, player, monster) => {
-  let logs = [];
+  let logs = []; // 전투 로그 초기화
 
-  // 몬스터 등장 메시지
-  logs.push(chalk.redBright(`앗, ${monster.name}(이)가 나타났다!!`));
+  logs.push(chalk.redBright(`\n${monster.name}(이)가 나타났다!`));
+  unlockMonster(monster.name); // 몬스터 도감 등록
 
-  // 전투 루프
   while (player.hp > 0 && monster.hp > 0) {
     console.clear();
+
+    // 현재 상태 출력
     displayStatus(stage, player, monster);
-    logs.slice(-5).forEach((log) => console.log(log)); // 마지막 5개의 로그만 표시
+    logs.slice(-5).forEach((log) => console.log(log)); // 최근 5개의 로그만 출력
 
     console.log(
       chalk.green(
-        `\n1. 공격하기 2. 연속 공격 (25%) 3. 방어하기 (${(player.defendChance * 100).toFixed(0)}%) 4. 도망치기! 돔황챠! (50%) `,
+        `\n1. 공격하기 2. 연속 공격 (25%) 3. 방어하기 (${(player.defendChance * 100).toFixed(0)}%) 4. 도망치기 (50%)`,
       ),
     );
-    const choice = readlineSync.question('your choice? ').trim();
+    const choice = readlineSync.question('Your choice? ').trim();
 
     if (!['1', '2', '3', '4'].includes(choice)) {
-      console.log(chalk.red('유효하지 않은 선택입니다! 다시 선택해주세요.'));
-      continue;
+      logs.push(chalk.red('유효하지 않은 선택입니다! 다시 선택해주세요.'));
+      continue; // 유효하지 않은 입력 시 루프 계속
     }
 
     logs.push(chalk.white(`\n${choice} 번을 선택하셨습니다.`));
@@ -55,7 +57,10 @@ const battle = async (stage, player, monster) => {
 
         if (monster.hp <= 0) {
           logs.push(chalk.greenBright(`\n${monster.name}(을)를 처치했습니다!`));
-          return 'won';
+          console.clear();
+          displayStatus(stage, player, monster); // 전투 종료 후 상태 출력
+          logs.slice(-5).forEach((log) => console.log(log)); // 최근 5개의 로그만 출력
+          return 'won'; // 즉시 전투 종료
         }
 
         const monsterDamage1 = monster.attack();
@@ -63,7 +68,9 @@ const battle = async (stage, player, monster) => {
         logs.push(chalk.redBright(`플레이어가 ${monsterDamage1} 만큼의 피해를 입었습니다.`));
 
         if (player.hp <= 0) {
-          return handlePlayerDeath(logs, player, monster, monsterDamage1);
+          console.clear();
+          displayStatus(stage, player, monster); // 사망 시 상태 출력
+          return handlePlayerDeath(logs, player, monster, monsterDamage1); // 사망 처리
         }
         break;
 
@@ -71,8 +78,19 @@ const battle = async (stage, player, monster) => {
         if (Math.random() < 0.25) {
           const firstAttack = player.attack();
           monster.hp -= firstAttack;
-          logs.push( chalk.blueBright(`\n연속 공격 성공!`));
-          logs.push( chalk.blueBright(`\n첫 번째 공격으로 ${firstAttack} 데미지를 입혔습니다.`));
+          logs.push(
+            chalk.blueBright(
+              `\n연속 공격 성공! 첫 번째 공격으로 ${firstAttack} 데미지를 입혔습니다.`,
+            ),
+          );
+
+          if (monster.hp <= 0) {
+            logs.push(chalk.greenBright(`\n${monster.name}(을)를 처치했습니다!`));
+            console.clear();
+            displayStatus(stage, player, monster);
+            logs.slice(-5).forEach((log) => console.log(log));
+            return 'won';
+          }
 
           const secondAttack = player.attack();
           monster.hp -= secondAttack;
@@ -80,6 +98,9 @@ const battle = async (stage, player, monster) => {
 
           if (monster.hp <= 0) {
             logs.push(chalk.greenBright(`\n${monster.name}(을)를 처치했습니다!`));
+            console.clear();
+            displayStatus(stage, player, monster);
+            logs.slice(-5).forEach((log) => console.log(log));
             return 'won';
           }
         } else {
@@ -89,6 +110,8 @@ const battle = async (stage, player, monster) => {
           logs.push(chalk.redBright(`${monster.name}에게 ${monsterDamage2} 데미지를 입었습니다.`));
 
           if (player.hp <= 0) {
+            console.clear();
+            displayStatus(stage, player, monster);
             return handlePlayerDeath(logs, player, monster, monsterDamage2);
           }
         }
@@ -107,6 +130,8 @@ const battle = async (stage, player, monster) => {
           );
 
           if (player.hp <= 0) {
+            console.clear();
+            displayStatus(stage, player, monster);
             return handlePlayerDeath(logs, player, monster, monsterDamage3);
           }
         }
@@ -116,12 +141,12 @@ const battle = async (stage, player, monster) => {
         if (Math.random() < 0.5) {
           console.log(chalk.yellow(`\n${monster.name}에게서 무사히 도망쳤습니다!`));
           const restResult = await restingStage(player, stage);
+
           if (restResult === 'continue') {
-            monster = new Monster(stage);
-            logs.push(chalk.redBright(`새로운 몬스터 ${monster.name}(이)가 나타났다!`));
             continue;
+          } else if (restResult === 'quit') {
+            return 'escaped';
           }
-          return 'escaped';
         } else {
           const monsterDamage4 = monster.attack();
           player.hp -= monsterDamage4;
@@ -132,6 +157,7 @@ const battle = async (stage, player, monster) => {
           );
 
           if (player.hp <= 0) {
+            console.clear();
             return handlePlayerDeath(logs, player, monster, monsterDamage4);
           }
         }
@@ -139,8 +165,7 @@ const battle = async (stage, player, monster) => {
     }
   }
 
-  console.clear();
-  return player.hp > 0 ? 'won' : 'lost';
+  return player.hp > 0 ? 'won' : 'lost'; // 루프 종료 조건에 따라 결과 반환
 };
 
 export default battle;

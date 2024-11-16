@@ -30,7 +30,7 @@ class Player {
   // 공격 메서드
   attack() {
     const damage = Math.floor(Math.random() * (this.maxAtt - this.minAtt + 1)) + this.minAtt;
-    console.log(chalk.greenBright(`플레이어가 ${damage}의 데미지를 입혔습니다!`)); // 공격력 로그 출력
+    // console.log(chalk.greenBright(`플레이어가 ${damage}의 데미지를 입혔습니다!`));
     return damage;
   }
 

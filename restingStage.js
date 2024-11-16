@@ -1,46 +1,46 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
-import { start } from './server.js'; // 로비로 돌아가기 함수 임포트
+import { start } from './server.js';
 
 /**
  * 쉬는 스테이지 로직
  */
 const restingStage = async (player, stage) => {
   console.clear();
-
+  
   // 휴식 스테이지 상단 그래픽 출력
   displayRestingBanner(stage);
-
+  
   // 플레이어가 쉬면서 체력 회복
-  const healAmount = Math.min(player.maxHp * 0.2, player.maxHp - player.hp); // 최대 체력을 초과하지 않도록 계산
-  const prevHp = player.hp; // 회복 전 체력 저장
-  player.heal(0.2); // 체력 회복
-
+  const healAmount = Math.min(player.maxHp * 0.2, player.maxHp - player.hp);
+  const prevHp = player.hp;
+  player.heal(0.2);
+  
   // 회복량 및 상태 출력
   if (healAmount > 0) {
-    console.log(chalk.green(`\n체력이 ${healAmount.toFixed(2)}만큼 회복되었습니다!`));
+    console.log(chalk.green(`\n체력이 ${healAmount.toFixed(1)}만큼 회복되었습니다!`));
   } else {
     console.log(chalk.yellow(`\n현재 체력이 이미 최대치(${player.maxHp})입니다. 추가 회복이 필요하지 않습니다.`));
   }
-  console.log(chalk.blueBright(`회복 전 체력: ${prevHp.toFixed(2)} / ${player.maxHp}`));
-  console.log(chalk.blueBright(`현재 체력: ${player.hp.toFixed(2)} / ${player.maxHp}`));
-
+  console.log(chalk.blueBright(`회복 전 체력: ${prevHp.toFixed(1)} / ${player.maxHp}`));
+  console.log(chalk.blueBright(`현재 체력: ${player.hp.toFixed(1)} / ${player.maxHp}`));
+  
   // 플레이어 선택
   while (true) {
     console.log(chalk.cyan(`\n어떻게 하시겠습니까?`));
     console.log(chalk.yellowBright(`1. 스테이지로 돌아가기`));
     console.log(chalk.yellowBright(`2. 로비로 돌아가기`));
-
+    
     const choice = readlineSync.question(chalk.yellowBright(`(1 / 2): `)).trim();
+    
     if (choice === '1') {
       console.clear();
       console.log(chalk.cyanBright('스테이지로 돌아갑니다...'));
-      return 'continue'; // 스테이지로 돌아가기
+      return 'continue';
     } else if (choice === '2') {
       console.clear();
       console.log(chalk.cyanBright('로비로 돌아갑니다...'));
-      start(); // 로비로 이동
-      return 'lobby'; // 로비로 돌아간 결과 반환
+      return 'quit'; // 'lobby' 대신 'quit'으로 변경하여 일관성 유지
     } else {
       console.log(chalk.red(`유효하지 않은 선택입니다. 다시 입력해주세요.`));
     }
@@ -51,15 +51,12 @@ const restingStage = async (player, stage) => {
  * 쉬는 스테이지 상단 배너 출력
  */
 function displayRestingBanner(stage) {
-  const banner = `
-${chalk.cyanBright('********************************************')}
-${chalk.cyanBright('**                                        **')}
-${chalk.cyanBright('**           쉬어가는 스테이지!           **')}
-${chalk.cyanBright('**                                        **')}
-${chalk.cyanBright('********************************************')}
-  `;
-
-  console.log(banner);
+  console.log(chalk.cyanBright('********************************************'));
+  console.log(chalk.cyanBright('**                                        **'));
+  console.log(chalk.cyanBright('**           쉬어가는 스테이지!           **'));
+  console.log(chalk.cyanBright('**                                        **'));
+  console.log(chalk.cyanBright('********************************************'));
+  console.log();
   console.log(chalk.cyanBright(`현재 스테이지: ${stage}`));
   console.log(chalk.cyanBright('체력을 회복하며 잠시 숨을 고르세요...'));
 }
