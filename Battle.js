@@ -6,7 +6,7 @@ import Monster from './Monster.js';
 import { unlockMonster } from './monsterCompendium.js';
 
 // 사망 처리 로직 함수
-const handlePlayerDeath = (logs, player, monster, monsterDamage) => {
+const handlePlayerDeath = (stage, logs, player, monster, monsterDamage) => {
   logs.push(
     chalk.redBright(
       `\n플레이어가 ${monster.name}에게 받은 마지막 데미지는 ${monsterDamage} 입니다.`,
@@ -70,7 +70,7 @@ const battle = async (stage, player, monster) => {
         if (player.hp <= 0) {
           console.clear();
           displayStatus(stage, player, monster); // 사망 시 상태 출력
-          return handlePlayerDeath(logs, player, monster, monsterDamage1); // 사망 처리
+          return handlePlayerDeath(stage, logs, player, monster, monsterDamage1); // 사망 처리
         }
         break;
 
@@ -112,7 +112,7 @@ const battle = async (stage, player, monster) => {
           if (player.hp <= 0) {
             console.clear();
             displayStatus(stage, player, monster);
-            return handlePlayerDeath(logs, player, monster, monsterDamage2);
+            return handlePlayerDeath(stage, logs, player, monster, monsterDamage2);
           }
         }
         break;
@@ -132,7 +132,7 @@ const battle = async (stage, player, monster) => {
           if (player.hp <= 0) {
             console.clear();
             displayStatus(stage, player, monster);
-            return handlePlayerDeath(logs, player, monster, monsterDamage3);
+            return handlePlayerDeath(stage, logs, player, monster, monsterDamage3);
           }
         }
         break;
@@ -157,8 +157,7 @@ const battle = async (stage, player, monster) => {
           );
 
           if (player.hp <= 0) {
-            console.clear();
-            return handlePlayerDeath(logs, player, monster, monsterDamage4);
+            return handlePlayerDeath(stage, logs, player, monster, monsterDamage4);
           }
         }
         break;

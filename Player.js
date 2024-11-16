@@ -3,9 +3,9 @@ import chalk from 'chalk';
 class Player {
   constructor(initialStats = {}) {
     const defaultStats = {
-      hp: 100,
-      maxHp: 120,
-      minAtt: 10,
+      hp: 120,
+      maxHp: 150,
+      minAtt: 15,
       maxAtt: 25,
       defendChance: 0.3,
     };
