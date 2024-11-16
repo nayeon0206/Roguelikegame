@@ -39,14 +39,15 @@ const restingStage = async (player, stage) => {
  * 쉬는 스테이지 상단 배너 출력
  */
 function displayRestingBanner(stage) {
-  console.log(chalk.cyanBright('********************************************'));
+  console.log(); // 한칸 띄우기
+  console.log(chalk.cyanBright('\n********************************************'));
   console.log(chalk.cyanBright('**                                        **'));
   console.log(chalk.cyanBright('**           휴식하기 스테이지!           **'));
   console.log(chalk.cyanBright('**                                        **'));
   console.log(chalk.cyanBright('********************************************'));
   console.log();
   console.log(chalk.cyanBright(`현재 스테이지: ${stage}`));
-  console.log(chalk.cyanBright('천천히 숨을 고르며, 몬스터에게도 준비 시간을 줍시다!'));
+  console.log(chalk.cyanBright(`\n천천히 숨을 고르며, 몬스터에게도 준비 시간을 줍시다!`));
 }
 
 export default restingStage;
