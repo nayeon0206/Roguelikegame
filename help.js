@@ -17,33 +17,35 @@ export function showHelp() {
             case '1':
                 console.log(chalk.greenBright('\n전투 시스템 정보'));
                 console.log(chalk.gray('\n==============================================='));            
-                console.log(chalk.cyan('\n1. 공격하기, 방어하기, 도망치기 등의 선택이 가능합니다.'));
-                console.log(chalk.cyan('2. 스테이지 클리어를 통해 얻는 능력치 증가에는 체력 회복, 최소공격력 증가, 최대공격력 증가, 방어 확률 증가가 있습니다.'));
-                console.log(chalk.cyan('3. 방어 확률은 캐릭터의 스탯에 따라 달라집니다.'));
-                console.log(chalk.cyan('4. 전투에서 도망치면 어딘가로 이동해 체력을 회복할 수 있습니다.'));
+                console.log(chalk.cyan('\n1. 공격하기, 방어하기, 휴식하기 등의 선택이 가능합니다.'));
+                console.log(chalk.cyan(`\n2. 스테이지 클리어를 통해 얻는 능력치 증가에는`))
+                console.log(chalk.white(`   '체력 회복, 최소공격력 증가, 최대공격력 증가, 방어 확률 증가, 최대 체력 증가'`))
+                +console.log(chalk.cyan(`   가 있습니다.`));
+                console.log(chalk.cyan('\n3. 방어 확률은 캐릭터의 스탯에 따라 달라집니다.'));
+                console.log(chalk.cyan('\n4. 휴식하기를 누르면 몬스터의 눈을 피해 어딘가로 이동하여 체력을 회복할 수 있습니다.'));
                 console.log(chalk.gray('\n==============================================='));            
                 break;
             case '2':
                 console.log(chalk.greenBright('\n게임 정보'));
                 console.log(chalk.gray('\n==============================================='));            
                 console.log(chalk.cyan('\n1. 스테이지를 클리어하며 몬스터와 싸우세요.'));
-                console.log(chalk.cyan('2. 몬스터 도감을 통해 만난 몬스터를 확인하세요.'));
+                console.log(chalk.cyan('\n2. 몬스터 도감을 통해 처치한 몬스터를 확인할 수 있습니다.'));
                 console.log(chalk.gray('\n==============================================='));            
                 break;
             case '3':
                 console.log(chalk.greenBright('\n스테이지 정보'));
                 console.log(chalk.gray('\n==============================================='));            
                 console.log(chalk.cyan('\n1. 스테이지 1-5: 초보 몬스터가 등장합니다.'));
-                console.log(chalk.cyan('2. 스테이지 6-9: 중급 몬스터가 등장합니다.'));
-                console.log(chalk.cyan('3. 스테이지 10: 보스 몬스터가 등장합니다!'));
+                console.log(chalk.cyan('\n2. 스테이지 6-9: 중급 몬스터가 등장합니다.'));
+                console.log(chalk.cyan('\n3. 스테이지 10: 보스 몬스터가 등장합니다!'));
                 console.log(chalk.gray('\n==============================================='));            
                 break;
             case '4':
                 console.log(chalk.greenBright('\n게임 팁'));
                 console.log(chalk.gray('\n==============================================='));            
                 console.log(chalk.cyan('\n1. 연속 공격은 성공 확률이 낮지만 큰 피해를 줄 수 있습니다.'));
-                console.log(chalk.cyan('2. 도망쳤을 경우 체력을 회복하고 새로운 스테이지를 시작하세요.'));
-                console.log(chalk.cyan('3. 보스 몬스터와의 전투 전에는 최대 체력을 유지하세요.'));
+                console.log(chalk.cyan('\n2. 도망쳤을 경우 체력을 회복하고 새로운 스테이지를 시작하세요.'));
+                console.log(chalk.cyan('\n3. 보스 몬스터와의 전투 전에는 최대 체력을 유지하세요.'));
                 console.log(chalk.gray('\n==============================================='));            
                 break;
             case '5':
