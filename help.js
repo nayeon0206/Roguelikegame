@@ -44,7 +44,7 @@ export function showHelp() {
                 console.log(chalk.greenBright('\n게임 팁'));
                 console.log(chalk.gray('\n==============================================='));            
                 console.log(chalk.cyan('\n1. 연속 공격은 성공 확률이 낮지만 큰 피해를 줄 수 있습니다.'));
-                console.log(chalk.cyan('\n2. 도망쳤을 경우 체력을 회복하고 새로운 스테이지를 시작하세요.'));
+                console.log(chalk.cyan('\n2. 휴식을 선택한 경우 체력을 회복하고 스테이지를 시작할 수 있습니다.'));
                 console.log(chalk.cyan('\n3. 보스 몬스터와의 전투 전에는 최대 체력을 유지하세요.'));
                 console.log(chalk.gray('\n==============================================='));            
                 break;
