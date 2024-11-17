@@ -76,7 +76,7 @@ const battle = async (stage, player, monster) => {
         }
         break;
 
-      case '2': // 연속 공격 (25% 확률)
+      case '2': // 연속 공격 (30% 확률)
         if (Math.random() < 0.3) {
           const firstAttack = player.attack();
           monster.hp -= firstAttack;
