@@ -25,21 +25,21 @@ function displayLobby() {
     );
 
     // 상단 경계선
-    const line = chalk.magentaBright('='.repeat(52));
+    const line = chalk.greenBright('='.repeat(52));
     console.log(line);
 
     // 게임 이름
     console.log(chalk.yellowBright.bold('게임에 오신 것을 환영합니다!'));
 
     // 설명 텍스트
-    console.log(chalk.green('\n옵션을 선택해주세요.'));
+    console.log(chalk.yellowBright('\n옵션을 선택해주세요.'));
     console.log();
 
     // 옵션들
-    console.log(chalk.blueBright('1.') + chalk.white(' 새로운 게임 시작'));
-    console.log(chalk.blueBright('2.') + chalk.white(' 도움말'));
-    console.log(chalk.blueBright('3.') + chalk.white(' 몬스터 도감 보기'));
-    console.log(chalk.blueBright('4.') + chalk.white(' 종료'));
+    console.log(chalk.magentaBright('1.') + chalk.white(' 새로운 게임 시작'));
+    console.log(chalk.magentaBright('2.') + chalk.white(' 도움말'));
+    console.log(chalk.magentaBright('3.') + chalk.white(' 몬스터 도감 보기'));
+    console.log(chalk.magentaBright('4.') + chalk.white(' 종료'));
 
     // 하단 경계선
     console.log(line);
